@@ -10,7 +10,7 @@
 <meta name="description" content="Violate Responsive Admin Template">
 <meta name="keywords" content="Super Admin, Admin, Template, Bootstrap">
 
-<title>Super Admin Responsive Template</title>
+<title>My assistant for web</title>
 
 <!-- CSS -->
 <link href="dist/css/bootstrap.min.css" rel="stylesheet">
@@ -22,9 +22,6 @@
 <link href="dist/css/icons.css" rel="stylesheet">
 <link href="dist/css/generics.css" rel="stylesheet">
 
-<!-- All JS functions -->
-<script src="dist/js/functions.js"></script>
-
 <!-- Javascript Libraries -->
 <!-- jQuery -->
 <script src="dist/js/jquery.min.js"></script>
@@ -34,168 +31,79 @@
 <script src="dist/js/jquery.easing.1.3.js"></script>
 <!-- jQuery Easing - Requirred for Lightbox + Pie Charts-->
 
+<!-- Bootstrap -->
+<script src="dist/js/bootstrap.min.js"></script>
+
+<!-- Charts -->
+<script src="dist/js/charts/jquery.flot.js"></script>
+<!-- Flot Main -->
+<script src="dist/js/charts/jquery.flot.time.js"></script>
+<!-- Flot sub -->
+<script src="dist/js/charts/jquery.flot.animator.min.js"></script>
+<!-- Flot sub -->
+<script src="dist/js/charts/jquery.flot.resize.min.js"></script>
+<!-- Flot sub - for repaint when resizing the screen -->
+
+<script src="dist/js/sparkline.min.js"></script>
+<!-- Sparkline - Tiny charts -->
+<script src="dist/js/easypiechart.js"></script>
+<!-- EasyPieChart - Animated Pie Charts -->
+<script src="dist/js/charts.js"></script>
+<!-- All the above chart related functions -->
+
+<!-- Map -->
+<script src="dist/js/maps/jvectormap.min.js"></script>
+<!-- jVectorMap main library -->
+<script src="dist/js/maps/usa.js"></script>
+<!-- USA Map for jVectorMap -->
+
+<!--  Form Related -->
+<script src="dist/js/icheck.js"></script>
+<!-- Custom Checkbox + Radio -->
+
+<!-- UX -->
+<script src="dist/js/scroll.min.js"></script>
+<!-- Custom Scrollbar -->
+
+<!-- Other -->
+<script src="dist/js/calendar.min.js"></script>
+<!-- Calendar -->
+<script src="dist/js/feeds.min.js"></script>
+<!-- News Feeds -->
+
+<!-- All JS functions -->
+<script src="dist/js/functions.js"></script>
+
+<style>
+body, a, input, .help-block {
+	color: #fff;
+	text-shadow: none;
+}
+</style>
+
 </head>
 
-<body>
+<body id="skin-blur-chrome">
 
 	<section id="main" class="p-relative" role="main">
 
 		<!-- Content -->
 		<section id="content" class="container">
 
-			<!-- Main Widgets -->
+			<!-- Main Content -->
 			<div class="block-area">
-				<div class="row">
-					<div class="col-md-4">
-						<!-- Main Chart -->
-						<div class="tile">
-							<h2 class="tile-title">Statistics</h2>
-							<div class="tile-config dropdown">
-								<a data-toggle="dropdown" href="" class="tile-menu"></a>
-								<ul class="dropdown-menu pull-right text-right">
-									<li><a class="tile-info-toggle" href="">Chart
-											Information</a></li>
-									<li><a href="">Refresh</a></li>
-									<li><a href="">Settings</a></li>
-								</ul>
-							</div>
-							<div class="p-10">
-								<div class="col-md-6 m-b-15">
-									<label>Date</label> <input type="text"
-										class="input-sm form-control mask-date" placeholder="..."
-										maxlength="10" autocomplete="off">
-								</div>
-								<div class="col-md-6 m-b-15">
-									<label>Date</label> <input type="text"
-										class="input-sm form-control mask-date" placeholder="..."
-										maxlength="10" autocomplete="off">
-								</div>
-								<div class="clearfix"></div>
-							</div>
-						</div>
-
-					</div>
-
-					<div class="col-md-4">
-						<!-- Main Chart -->
-						<div class="tile">
-							<h2 class="tile-title">Statistics</h2>
-							<div class="tile-config dropdown">
-								<a data-toggle="dropdown" href="" class="tile-menu"></a>
-								<ul class="dropdown-menu pull-right text-right">
-									<li><a class="tile-info-toggle" href="">Chart
-											Information</a></li>
-									<li><a href="">Refresh</a></li>
-									<li><a href="">Settings</a></li>
-								</ul>
-							</div>
-							<div class="p-10">
-								<div class="col-md-6 m-b-15">
-									<label>Date</label> <input type="text"
-										class="input-sm form-control mask-date" placeholder="..."
-										maxlength="10" autocomplete="off">
-								</div>
-								<div class="col-md-6 m-b-15">
-									<label>Date</label> <input type="text"
-										class="input-sm form-control mask-date" placeholder="..."
-										maxlength="10" autocomplete="off">
-								</div>
-								<div id="my-data" class="col-md-12 m-b-15"></div>
-								<script>
-									$(document).ready(function() {
-										requestData({
-											assistantType : "111",
-											originType : "1",
-											requestContent : "你好"
-										}, function(data) {
-											$("#my-data").html(data);
-										});
-									});
-								</script>
-								<div class="clearfix"></div>
-							</div>
-						</div>
-
-					</div>
-
-					<div class="col-md-4">
-						<!-- Main Chart -->
-						<div class="tile">
-							<h2 class="tile-title">Statistics</h2>
-							<div class="tile-config dropdown">
-								<a data-toggle="dropdown" href="" class="tile-menu"></a>
-								<ul class="dropdown-menu pull-right text-right">
-									<li><a class="tile-info-toggle" href="">Chart
-											Information</a></li>
-									<li><a href="">Refresh</a></li>
-									<li><a href="">Settings</a></li>
-								</ul>
-							</div>
-							<div class="p-10">
-								<div class="col-md-6 m-b-15">
-									<label>Date</label> <input type="text"
-										class="input-sm form-control mask-date" placeholder="..."
-										maxlength="10" autocomplete="off">
-								</div>
-								<div class="col-md-6 m-b-15">
-									<label>Date</label> <input type="text"
-										class="input-sm form-control mask-date" placeholder="..."
-										maxlength="10" autocomplete="off">
-								</div>
-								<div class="clearfix"></div>
-							</div>
-						</div>
-
-					</div>
-
-					<div class="clearfix"></div>
+				<div class="row p-10">
+					<input id="main-search-input" type="text" class="main-search"
+						style="width: 100%; border-bottom: 1px solid white;">
+				</div>
+				<div class="row" id="main-content">
+					<p style="text-align: center;">LOADING...</p>
 				</div>
 			</div>
 
 		</section>
 
-		<!-- Older IE Message -->
 	</section>
-
-	<!-- Bootstrap -->
-	<script src="dist/js/bootstrap.min.js"></script>
-
-	<!-- Charts -->
-	<script src="dist/js/charts/jquery.flot.js"></script>
-	<!-- Flot Main -->
-	<script src="dist/js/charts/jquery.flot.time.js"></script>
-	<!-- Flot sub -->
-	<script src="dist/js/charts/jquery.flot.animator.min.js"></script>
-	<!-- Flot sub -->
-	<script src="dist/js/charts/jquery.flot.resize.min.js"></script>
-	<!-- Flot sub - for repaint when resizing the screen -->
-
-	<script src="dist/js/sparkline.min.js"></script>
-	<!-- Sparkline - Tiny charts -->
-	<script src="dist/js/easypiechart.js"></script>
-	<!-- EasyPieChart - Animated Pie Charts -->
-	<script src="dist/js/charts.js"></script>
-	<!-- All the above chart related functions -->
-
-	<!-- Map -->
-	<script src="dist/js/maps/jvectormap.min.js"></script>
-	<!-- jVectorMap main library -->
-	<script src="dist/js/maps/usa.js"></script>
-	<!-- USA Map for jVectorMap -->
-
-	<!--  Form Related -->
-	<script src="dist/js/icheck.js"></script>
-	<!-- Custom Checkbox + Radio -->
-
-	<!-- UX -->
-	<script src="dist/js/scroll.min.js"></script>
-	<!-- Custom Scrollbar -->
-
-	<!-- Other -->
-	<script src="dist/js/calendar.min.js"></script>
-	<!-- Calendar -->
-	<script src="dist/js/feeds.min.js"></script>
-	<!-- News Feeds -->
 
 </body>
 
