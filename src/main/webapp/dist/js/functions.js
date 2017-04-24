@@ -23,6 +23,10 @@ window.assistant = {
 			}
 		});
 	},
+	appendMainContainerUnique : function(data, styleClass) {
+		$("." + styleClass).remove();
+		$("#main-content").append(data);
+	},
 	modal : {
 		showDialog : function(params) {
 			if (params.title)
