@@ -9,8 +9,8 @@ window.assistant = {
 		});
 	},
 	bindAnimate : function(data) {
-		var styleClass = $(data).attr("name");
-		if (styleClass) {
+		var animate = $(data).attr("animate");
+		if (animate) {
 			var bindData = $(data);
 			bindData.addClass("animated").css("animation-name", "bounceInDown");
 			return bindData;
@@ -33,9 +33,8 @@ window.assistant = {
 			}
 		});
 	},
-	appendMainContainerUnique : function(data, styleClass) {
-		$("." + styleClass).remove();
-		$("#main-content").append(assistant.bindAnimate(data));
+	appendContainer : function(data, styleClass) {
+		$("." + styleClass).html(data);
 	},
 	modal : {
 		showDialog : function(params) {
@@ -113,6 +112,9 @@ $(document).ready(
 							assistant.requestData({
 								requestContent : value
 							}, function(data) {
+								if ($(".MainAssistant-container").size() > 0) {
+									$(".MainAssistant-container").remove();
+								}
 								$("#main-content").append(
 										assistant.bindAnimate(data));
 								input.val("");
