@@ -8,26 +8,21 @@ window.assistant = {
 			callBack(data);
 		});
 	},
-	animateShow : function(data) {
+	bindAnimate : function(data) {
 		var styleClass = $(data).attr("name");
 		if (styleClass) {
-			var width = $("." + styleClass)[0].clientWidth;
-			var marginLeft = $("." + styleClass).css("margin-left");
-			$("." + styleClass).width(0).css("opacity", 0).css("margin-left",
-					width / 2 + "px");
-			$("." + styleClass).animate({
-				width : width,
-				marginLeft : marginLeft,
-				opacity : '1'
-			}, "fast");
+			var bindData = $(data);
+			bindData.addClass("animated").css("animation-name", "bounceInDown");
+			return bindData;
+		} else {
+			return data;
 		}
 	},
 	getHome : function() {
 		assistant.requestData({
 			requestContent : "管家"
 		}, function(data) {
-			$("#main-content").html(data);
-			assistant.animateShow(data);
+			$("#main-content").html(assistant.bindAnimate(data));
 		});
 	},
 	keepAssistantContainerUnique : function(styleClass) {
@@ -40,8 +35,7 @@ window.assistant = {
 	},
 	appendMainContainerUnique : function(data, styleClass) {
 		$("." + styleClass).remove();
-		$("#main-content").append(data);
-		assistant.animateShow(data);
+		$("#main-content").append(assistant.bindAnimate(data));
 	},
 	modal : {
 		showDialog : function(params) {
@@ -119,8 +113,8 @@ $(document).ready(
 							assistant.requestData({
 								requestContent : value
 							}, function(data) {
-								$("#main-content").append(data);
-								assistant.animateShow(data);
+								$("#main-content").append(
+										assistant.bindAnimate(data));
 								input.val("");
 							});
 						}
