@@ -93,7 +93,7 @@ window.assistant = {
 $(document).ready(
 		function() {
 
-			setTimeout("assistant.getHome();", 1000);
+			setTimeout("assistant.getHome();", 200);
 
 			$("#main-search-input").keyup(
 					function(event) {
