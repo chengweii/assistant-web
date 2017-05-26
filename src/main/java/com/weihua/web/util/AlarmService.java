@@ -7,16 +7,15 @@ import java.util.TimerTask;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
-import javax.servlet.ServletException;
 
 import org.apache.log4j.Logger;
 
 import com.google.gson.reflect.TypeToken;
+import com.weihua.assistant.constant.OriginType;
 import com.weihua.assistant.entity.request.BaseRequest;
 import com.weihua.ui.userinterface.AssistantInterface;
 import com.weihua.ui.userinterface.UserInterface;
 import com.weihua.util.DBUtil;
-import com.weihua.util.ExceptionUtil;
 import com.weihua.util.GsonUtil;
 import com.weihua.util.TemplateUtil;
 
@@ -33,6 +32,7 @@ public class AlarmService implements ServletContextListener {
 		BaseRequest.RequestData request = new BaseRequest.RequestData();
 		request.isLocationPath = true;
 		request.requestContent = "callAlarmService";
+		request.originType = OriginType.WEB.getCode();
 		ALARM_REQUEST_CONTENT = GsonUtil.toJson(request);
 	}
 
