@@ -11,6 +11,9 @@
 		<url-pattern>*.htm</url-pattern>
 	</servlet-mapping>
 	<listener>
+		<listener-class>com.weihua.web.util.SyncService</listener-class>
+	</listener>
+	<listener>
 		<listener-class>com.weihua.web.util.AlarmService</listener-class>
 	</listener>
 </web-app>

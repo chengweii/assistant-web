@@ -1,9 +1,7 @@
 package com.weihua.web.util;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
-import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -18,7 +16,6 @@ import com.weihua.assistant.entity.request.BaseRequest;
 import com.weihua.ui.userinterface.AssistantInterface;
 import com.weihua.ui.userinterface.UserInterface;
 import com.weihua.util.DBUtil;
-import com.weihua.util.EmailUtil;
 import com.weihua.util.GsonUtil;
 import com.weihua.util.TemplateUtil;
 
@@ -37,10 +34,6 @@ public class AlarmService implements ServletContextListener {
 		request.requestContent = "callAlarmService";
 		request.originType = OriginType.WEB.getCode();
 		ALARM_REQUEST_CONTENT = GsonUtil.toJson(request);
-
-		ResourceBundle emailBundle = ResourceBundle.getBundle("email", Locale.getDefault());
-		EmailUtil.init(emailBundle.getString("sendUser"), emailBundle.getString("sendPwd"),
-				emailBundle.getString("receiveUser"));
 	}
 
 	public AlarmService() {
