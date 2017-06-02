@@ -17,10 +17,10 @@ public class SyncService implements ServletContextListener {
 	private static final Logger LOGGER = Logger.getLogger(SyncService.class);
 	private static Timer timer = null;
 	private static final int DELAY = 5000;
-	private static final int PERIOD = 5000;
+	private static final int PERIOD = 15 * 60 * 1000;
 
 	static {
-		ResourceBundle emailBundle = ResourceBundle.getBundle("email", Locale.getDefault());
+		ResourceBundle emailBundle = ResourceBundle.getBundle("assets/email", Locale.getDefault());
 		EmailUtil.initDefaultEmailAccountInfo(emailBundle.getString("dataEmailUser"),
 				emailBundle.getString("dataEmailUserPwd"), emailBundle.getString("remindEmailUser"),
 				emailBundle.getString("notifyEmailUser"));
