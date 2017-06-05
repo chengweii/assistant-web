@@ -21,7 +21,8 @@ public class WebDBHelper implements DBHelper {
 	public WebDBHelper(String webRootPath) {
 		if (runner == null) {
 			dataSource = new SQLiteDataSource();
-			dataSource.setUrl("jdbc:sqlite:" + webRootPath + "WEB-INF/classes/" + DB_NAME);
+			// dataSource.setUrl("jdbc:sqlite:" + webRootPath + "WEB-INF/classes/" + DB_NAME);
+			dataSource.setUrl("jdbc:sqlite:E:/assistant-server/database/" + DB_NAME);
 			runner = new QueryRunner(dataSource);
 		}
 	}
