@@ -30,7 +30,9 @@ public class WebDBHelper implements DBHelper {
 	public Map<String, Object> queryMap(Logger logger, String sql, Object... params) {
 		Map<String, Object> map = null;
 		try {
-			map = runner.query(sql, new MapHandler(), params);
+			synchronized (runner) {
+				map = runner.query(sql, new MapHandler(), params);
+			}
 		} catch (SQLException e) {
 			ExceptionUtil.propagate(logger, e);
 		}
@@ -41,7 +43,9 @@ public class WebDBHelper implements DBHelper {
 	public List<Map<String, Object>> queryMapList(Logger logger, String sql, Object... params) {
 		List<Map<String, Object>> mapList = null;
 		try {
-			mapList = runner.query(sql, new MapListHandler(), params);
+			synchronized (runner) {
+				mapList = runner.query(sql, new MapListHandler(), params);
+			}
 		} catch (SQLException e) {
 			ExceptionUtil.propagate(logger, e);
 		}
@@ -52,7 +56,9 @@ public class WebDBHelper implements DBHelper {
 	public int queryUpdate(Logger logger, String sql, Object... params) {
 		int result = 0;
 		try {
-			result = runner.update(sql, params);
+			synchronized (runner) {
+				result = runner.update(sql, params);
+			}
 		} catch (SQLException e) {
 			ExceptionUtil.propagate(logger, e);
 		}
@@ -63,7 +69,9 @@ public class WebDBHelper implements DBHelper {
 	public int[] queryBatch(Logger logger, String sql, Object[][] params) {
 		int[] result = {};
 		try {
-			result = runner.batch(sql, params);
+			synchronized (runner) {
+				result = runner.batch(sql, params);
+			}
 		} catch (SQLException e) {
 			ExceptionUtil.propagate(logger, e);
 		}
