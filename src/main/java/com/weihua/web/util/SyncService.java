@@ -11,6 +11,7 @@ import javax.servlet.ServletContextListener;
 import org.apache.log4j.Logger;
 
 import com.weihua.message.MessageDispenser;
+import com.weihua.util.DidaListUtil;
 import com.weihua.util.EmailUtil;
 
 public class SyncService implements ServletContextListener {
@@ -20,10 +21,17 @@ public class SyncService implements ServletContextListener {
 	private static final int PERIOD = 15 * 60 * 1000;
 
 	static {
-		ResourceBundle emailBundle = ResourceBundle.getBundle("assets/email", Locale.getDefault());
-		EmailUtil.initDefaultEmailAccountInfo(emailBundle.getString("dataEmailUser"),
-				emailBundle.getString("dataEmailUserPwd"), emailBundle.getString("remindEmailUser"),
-				emailBundle.getString("notifyEmailUser"));
+		initUtilConfig();
+	}
+
+	private static void initUtilConfig() {
+		ResourceBundle emailBundle = ResourceBundle.getBundle("assets/verification", Locale.getDefault());
+		EmailUtil.initDefaultEmailAccountInfo(emailBundle.getString("email.dataEmailUser"),
+				emailBundle.getString("email.dataEmailUserPwd"), emailBundle.getString("email.remindEmailUser"),
+				emailBundle.getString("email.notifyEmailUser"));
+
+		DidaListUtil.initDidaListUtil(emailBundle.getString("didalist.username"),
+				emailBundle.getString("didalist.password"));
 	}
 
 	public SyncService() {
