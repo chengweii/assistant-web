@@ -8,6 +8,20 @@ window.assistant = {
 			callBack(data);
 		});
 	},
+	requestDataBatch : function(requestContentArray) {
+		for ( var index in requestContentArray) {
+			assistant.requestData({
+				requestContent : requestContentArray[index].requestContent
+			}, function(data) {
+				setTimeout(function() {
+					if ($(".MainAssistant-container").size() > 0) {
+						$(".MainAssistant-container").remove();
+					}
+					$("#main-content").append(assistant.bindAnimate(data));
+				}, 1500);
+			});
+		}
+	},
 	bindAnimate : function(data) {
 		var animate = $(data).attr("animate");
 		if (animate) {
@@ -20,7 +34,7 @@ window.assistant = {
 	},
 	getHome : function() {
 		assistant.requestData({
-			requestContent : "管家"
+			requestContent : "MyAssistant"
 		}, function(data) {
 			$("#main-content").html(assistant.bindAnimate(data));
 		});
