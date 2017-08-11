@@ -24,13 +24,23 @@ window.assistant = {
 	},
 	bindAnimate : function(data) {
 		var animate = $(data).attr("animate");
+		var newData = data;
 		if (animate) {
-			var bindData = $(data);
-			bindData.addClass("animated").css("animation-name", "bounceInDown");
-			return bindData;
-		} else {
-			return data;
+			newData = $(data).addClass("animated").css("animation-name",
+					"bounceInDown");
 		}
+		assistant.scrollBottom($("body"));
+		return newData;
+	},
+	scrollBottom : function(container) {
+		container.animate({
+			scrollTop : container[0].scrollHeight
+		}, 1000);
+	},
+	scrollTop : function(container) {
+		container.animate({
+			scrollTop : 0
+		}, 200);
 	},
 	getHome : function() {
 		assistant.requestData({
@@ -135,5 +145,9 @@ $(document).ready(
 							});
 						}
 					});
+			
+			$("body").dblclick(function(){
+				assistant.scrollTop($("body"));
+			});
 
 		});
