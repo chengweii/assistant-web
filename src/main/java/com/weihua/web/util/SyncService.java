@@ -11,6 +11,7 @@ import javax.servlet.ServletContextListener;
 import org.apache.log4j.Logger;
 
 import com.weihua.message.MessageDispenser;
+import com.weihua.util.ConfigUtil;
 import com.weihua.util.DidaListUtil;
 import com.weihua.util.EmailUtil;
 
@@ -25,7 +26,8 @@ public class SyncService implements ServletContextListener {
 	}
 
 	private static void initUtilConfig() {
-		ResourceBundle emailBundle = ResourceBundle.getBundle("assets/verification", Locale.getDefault());
+		ResourceBundle emailBundle = ResourceBundle.getBundle("assets/config", Locale.getDefault());
+		ConfigUtil.init(emailBundle);
 		EmailUtil.initDefaultEmailAccountInfo(emailBundle.getString("email.dataEmailUser"),
 				emailBundle.getString("email.dataEmailUserPwd"), emailBundle.getString("email.remindEmailUser"),
 				emailBundle.getString("email.notifyEmailUser"));
