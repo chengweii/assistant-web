@@ -1,6 +1,8 @@
 package com.weihua.web.util;
 
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -12,8 +14,6 @@ import org.apache.log4j.Logger;
 
 import com.weihua.message.MessageDispenser;
 import com.weihua.util.ConfigUtil;
-import com.weihua.util.DidaListUtil;
-import com.weihua.util.EmailUtil;
 
 public class SyncService implements ServletContextListener {
 	private static final Logger LOGGER = Logger.getLogger(SyncService.class);
@@ -27,13 +27,11 @@ public class SyncService implements ServletContextListener {
 
 	private static void initUtilConfig() {
 		ResourceBundle emailBundle = ResourceBundle.getBundle("assets/config", Locale.getDefault());
-		ConfigUtil.init(emailBundle);
-		EmailUtil.initDefaultEmailAccountInfo(emailBundle.getString("email.dataEmailUser"),
-				emailBundle.getString("email.dataEmailUserPwd"), emailBundle.getString("email.remindEmailUser"),
-				emailBundle.getString("email.notifyEmailUser"));
-
-		DidaListUtil.initDidaListUtil(emailBundle.getString("didalist.username"),
-				emailBundle.getString("didalist.password"));
+		Map<String, String> map = new HashMap<String, String>();
+		for (String key : emailBundle.keySet()) {
+			map.put(key, emailBundle.getString(key));
+		}
+		ConfigUtil.init(map);
 	}
 
 	public SyncService() {
