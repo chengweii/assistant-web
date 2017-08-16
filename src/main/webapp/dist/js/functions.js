@@ -42,6 +42,9 @@ window.assistant = {
 			scrollTop : 0
 		}, 200);
 	},
+	showLoading : function(id){
+		$("#"+id).append("<div class='assistant-loading'><span></span> <span></span> <span></span> <span></span> <span></span></div>");
+	},
 	getHome : function() {
 		assistant.requestData({
 			requestContent : "MyAssistant"
@@ -117,6 +120,7 @@ window.assistant = {
 $(document).ready(
 		function() {
 
+			assistant.showLoading("main-content");
 			setTimeout("assistant.getHome();", 200);
 
 			$("#main-search-input").keyup(
