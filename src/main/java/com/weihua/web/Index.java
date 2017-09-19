@@ -13,6 +13,7 @@ import com.weihua.common.constant.CommonConstant;
 import com.weihua.ui.userinterface.AssistantInterface;
 import com.weihua.ui.userinterface.UserInterface;
 import com.weihua.util.TemplateUtil;
+import com.weihua.web.util.AlarmService;
 
 public class Index extends HttpServlet {
 
@@ -27,7 +28,11 @@ public class Index extends HttpServlet {
 		if (requestContent == null) {
 			content = TemplateUtil.renderByTemplateFile(this.getServletContext().getRealPath("/"), "index.htm", null);
 		} else {
-			content = USER_INTERFACE.getResponse(requestContent);
+			if (requestContent.equals(AlarmService.GET_MSG_FROM_LOCAL_QUEUE)) {
+				content = AlarmService.getMsgFromLocalQueue();
+			} else {
+				content = USER_INTERFACE.getResponse(requestContent);
+			}
 		}
 
 		PrintWriter out = response.getWriter();

@@ -1,9 +1,12 @@
 package com.weihua.web.util;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -12,11 +15,13 @@ import org.apache.log4j.Logger;
 
 import com.google.gson.reflect.TypeToken;
 import com.weihua.assistant.constant.OriginType;
+import com.weihua.assistant.entity.alarm.AlarmInfo;
 import com.weihua.assistant.entity.request.BaseRequest;
 import com.weihua.ui.userinterface.AssistantInterface;
 import com.weihua.ui.userinterface.UserInterface;
 import com.weihua.util.DBUtil;
 import com.weihua.util.GsonUtil;
+import com.weihua.util.StringUtil;
 import com.weihua.util.TemplateUtil;
 
 public class AlarmService implements ServletContextListener {
@@ -27,6 +32,8 @@ public class AlarmService implements ServletContextListener {
 
 	private static final UserInterface USER_INTERFACE = new AssistantInterface();
 	private static final String ALARM_REQUEST_CONTENT;
+
+	private static Queue<AlarmInfo> msgQueue = new ConcurrentLinkedQueue<AlarmInfo>();
 
 	static {
 		BaseRequest.RequestData request = new BaseRequest.RequestData();
@@ -50,6 +57,21 @@ public class AlarmService implements ServletContextListener {
 		}
 	}
 
+	public static final String GET_MSG_FROM_LOCAL_QUEUE = "getMsgFromLocalQueue";
+
+	public static String getMsgFromLocalQueue() {
+		List<AlarmInfo> msgList = new ArrayList<AlarmInfo>();
+		while (true) {
+			AlarmInfo msg = msgQueue.poll();
+			if (msg != null) {
+				msgList.add(msg);
+			} else {
+				break;
+			}
+		}
+		return GsonUtil.toJson(msgList);
+	}
+
 	@Override
 	public void contextInitialized(ServletContextEvent servletContextEvent) {
 		servletContextEvent.getServletContext().log("AlarmService is starting.");
@@ -63,11 +85,11 @@ public class AlarmService implements ServletContextListener {
 							new TypeToken<Map<String, Object>>() {
 							});
 					if (alarm != null && alarm.get("msgList") != null) {
-						List<Map<String, String>> alarmList = GsonUtil.getEntityFromJson(
-								alarm.get("msgList").toString(), new TypeToken<List<Map<String, String>>>() {
+						List<AlarmInfo> alarmList = GsonUtil.getEntityFromJson(alarm.get("msgList").toString(),
+								new TypeToken<List<AlarmInfo>>() {
 								});
-						for (Map<String, String> item : alarmList) {
-							showMsg(item);
+						for (AlarmInfo item : alarmList) {
+							msgQueue.add(item);
 						}
 					}
 				} catch (Exception e) {
