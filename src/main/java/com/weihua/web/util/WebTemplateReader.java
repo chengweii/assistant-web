@@ -2,9 +2,9 @@ package com.weihua.web.util;
 
 import java.io.InputStream;
 
-import com.weihua.common.constant.CommonConstant;
-import com.weihua.util.ExceptionUtil;
-import com.weihua.util.TemplateUtil.TemplateReader;
+import com.google.common.base.Throwables;
+import com.weihua.common.util.TemplateUtil.TemplateReader;
+import com.weihua.web.constant.AssistantConstant;
 
 public class WebTemplateReader implements TemplateReader {
 
@@ -20,9 +20,9 @@ public class WebTemplateReader implements TemplateReader {
 			byte[] buffer = new byte[size];
 			input.read(buffer);
 			input.close();
-			content = new String(buffer, CommonConstant.CHARSET_UTF8);
+			content = new String(buffer, AssistantConstant.CHARSET_UTF8);
 		} catch (Exception e) {
-			content = ExceptionUtil.getStackTrace(e);
+			Throwables.propagate(e);
 		}
 
 		return content;

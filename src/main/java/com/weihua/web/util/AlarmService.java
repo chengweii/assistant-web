@@ -14,15 +14,13 @@ import javax.servlet.ServletContextListener;
 import org.apache.log4j.Logger;
 
 import com.google.gson.reflect.TypeToken;
-import com.weihua.assistant.constant.OriginType;
-import com.weihua.assistant.entity.alarm.AlarmInfo;
-import com.weihua.assistant.entity.request.BaseRequest;
-import com.weihua.ui.userinterface.AssistantInterface;
-import com.weihua.ui.userinterface.UserInterface;
-import com.weihua.util.DBUtil;
-import com.weihua.util.GsonUtil;
-import com.weihua.util.StringUtil;
-import com.weihua.util.TemplateUtil;
+import com.weihua.common.util.GsonUtil;
+import com.weihua.common.util.TemplateUtil;
+import com.weihua.web.constant.OriginType;
+import com.weihua.web.dao.impl.BaseDao;
+import com.weihua.web.entity.alarm.AlarmInfo;
+import com.weihua.web.entity.request.BaseRequest;
+import com.weihua.web.service.MainAssistant;
 
 public class AlarmService implements ServletContextListener {
 	private static final Logger LOGGER = Logger.getLogger(AlarmService.class);
@@ -30,8 +28,8 @@ public class AlarmService implements ServletContextListener {
 	private static final int DELAY = 5000;
 	private static final int PERIOD = 1000;
 
-	private static final UserInterface USER_INTERFACE = new AssistantInterface();
 	private static final String ALARM_REQUEST_CONTENT;
+	private static MainAssistant mainAssistant;
 
 	private static Queue<AlarmInfo> msgQueue = new ConcurrentLinkedQueue<AlarmInfo>();
 
@@ -53,7 +51,8 @@ public class AlarmService implements ServletContextListener {
 			String webRootPath = servletContextEvent.getServletContext().getRealPath("/");
 			LOGGER.info("webRootPath:" + webRootPath);
 			TemplateUtil.initTemplateReader(new WebTemplateReader());
-			DBUtil.initDBHelper(new WebDBHelper(webRootPath));
+			BaseDao.init(new WebDBHelper(webRootPath));
+			mainAssistant = MainAssistant.getInstance();
 		}
 	}
 
@@ -80,7 +79,7 @@ public class AlarmService implements ServletContextListener {
 			@Override
 			public void run() {
 				try {
-					String responseContent = USER_INTERFACE.getResponse(ALARM_REQUEST_CONTENT);
+					String responseContent = mainAssistant.execute(ALARM_REQUEST_CONTENT);
 					Map<String, Object> alarm = GsonUtil.getEntityFromJson(responseContent,
 							new TypeToken<Map<String, Object>>() {
 							});

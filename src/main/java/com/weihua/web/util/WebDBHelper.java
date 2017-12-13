@@ -10,8 +10,7 @@ import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.apache.log4j.Logger;
 import org.sqlite.SQLiteDataSource;
 
-import com.weihua.util.ExceptionUtil;
-import com.weihua.util.DBUtil.DBHelper;
+import com.google.common.base.Throwables;
 
 public class WebDBHelper implements DBHelper {
 
@@ -21,8 +20,8 @@ public class WebDBHelper implements DBHelper {
 	public WebDBHelper(String webRootPath) {
 		if (runner == null) {
 			dataSource = new SQLiteDataSource();
-			// dataSource.setUrl("jdbc:sqlite:" + webRootPath + "WEB-INF/classes/" + DB_NAME);
-			dataSource.setUrl("jdbc:sqlite:E:/assistant-server/database/" + DB_NAME);
+			// dataSource.setUrl("jdbc:sqlite:" + webRootPath + "WEB-INF/classes/assistant.db");
+			dataSource.setUrl("jdbc:sqlite:E:/assistant-server/database/assistant.db");
 			runner = new QueryRunner(dataSource);
 		}
 	}
@@ -35,7 +34,7 @@ public class WebDBHelper implements DBHelper {
 				map = runner.query(sql, new MapHandler(), params);
 			}
 		} catch (SQLException e) {
-			ExceptionUtil.propagate(logger, e);
+			Throwables.propagate(e);
 		}
 		return map;
 	}
@@ -48,7 +47,7 @@ public class WebDBHelper implements DBHelper {
 				mapList = runner.query(sql, new MapListHandler(), params);
 			}
 		} catch (SQLException e) {
-			ExceptionUtil.propagate(logger, e);
+			Throwables.propagate(e);
 		}
 		return mapList;
 	}
@@ -61,7 +60,7 @@ public class WebDBHelper implements DBHelper {
 				result = runner.update(sql, params);
 			}
 		} catch (SQLException e) {
-			ExceptionUtil.propagate(logger, e);
+			Throwables.propagate(e);
 		}
 		return result;
 	}
@@ -74,7 +73,7 @@ public class WebDBHelper implements DBHelper {
 				result = runner.batch(sql, params);
 			}
 		} catch (SQLException e) {
-			ExceptionUtil.propagate(logger, e);
+			Throwables.propagate(e);
 		}
 		return result;
 	}

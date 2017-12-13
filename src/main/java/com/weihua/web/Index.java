@@ -8,21 +8,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.weihua.assistant.entity.request.BaseRequest;
-import com.weihua.common.constant.CommonConstant;
-import com.weihua.ui.userinterface.AssistantInterface;
-import com.weihua.ui.userinterface.UserInterface;
-import com.weihua.util.TemplateUtil;
+import com.weihua.common.util.TemplateUtil;
+import com.weihua.web.constant.AssistantConstant;
+import com.weihua.web.entity.request.BaseRequest;
+import com.weihua.web.service.MainAssistant;
 import com.weihua.web.util.AlarmService;
 
 public class Index extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	private static final UserInterface USER_INTERFACE = new AssistantInterface();
-
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		response.setContentType("text/html;charset=" + CommonConstant.CHARSET_UTF8);
+		response.setContentType("text/html;charset=" + AssistantConstant.CHARSET_UTF8);
 		String requestContent = request.getParameter(BaseRequest.REQUEST_PARAM_KEY);
 		String content = null;
 		if (requestContent == null) {
@@ -31,7 +28,7 @@ public class Index extends HttpServlet {
 			if (requestContent.equals(AlarmService.GET_MSG_FROM_LOCAL_QUEUE)) {
 				content = AlarmService.getMsgFromLocalQueue();
 			} else {
-				content = USER_INTERFACE.getResponse(requestContent);
+				content = MainAssistant.getInstance().execute(requestContent);
 			}
 		}
 

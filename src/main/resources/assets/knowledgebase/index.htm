@@ -1,0 +1,82 @@
+<div class="col-md-12 ${assistantName}-container" animate="true">
+
+    <div class="tile">
+        <h2 class="tile-title">${assistantTitle}</h2>
+        <div class="tile-body h-pc-50 p-0">
+            <div class="col-md-9 p-0">
+                <div class="tile m-b-0">
+                    <div class="tile-body h-pc-50 p-0">
+                        <div class="col-sm-12 h-pe-60 p-0" style="background: rgba(0, 0, 0, 1) !important;">
+                            <div style="height:98%;width:60%;margin:0 auto;">
+                                <iframe id="${assistantName}-video" style="height:100%;width:100%;" src="" frameborder=0
+                                    'allowfullscreen'></iframe>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 h-pe-40 p-0">
+                            <div class="tile m-b-0">
+                                <div class="panel-group block m-b-0">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">
+                                                	详细内容
+                                            </h3>
+                                        </div>
+                                        <div class="panel-body h-pc-10" id="${assistantName}-doc" style="height:18pc;max-height: 18pc;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-3 p-0">
+                <div class="tile m-b-0" style="background:rgba(128,128,128,0.3);">
+                    <div class="tile-body h-pc-50 p-0">
+                        <div class="listview narrow sortable ui-sortable">
+                        	<% for(item in knowledgeList){ %>
+                            <div class="media p-l-5" style="border-bottom: 1px solid rgba(255, 255, 255, 0.11);">
+                                <div class="media-body p-l-10">
+                                	<a class="t-overflow ${assistantName}-item" video-url="${item.video_url}" doc-url="${item.doc_url}" href="javascript:void(0);">${item.title}</a><br>
+                                    <a class="btn btn-xs btn-alt m-r-5 m-t-5 m-b-5" href="${item.ppt_url}">PPT</a>
+                                    <small class="text-muted">${item.description}</small>
+                                </div>
+                            </div>
+                            <%}%>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+
+    <script>
+    assistant.keepAssistantContainerUnique('${assistantName}-container');
+    $(".${assistantName}-item").click(function(){
+    	var item = $(this);
+    	var video_url = item.attr("video-url");
+    	var doc_url = item.attr("doc-url");
+    	$("#${assistantName}-video").attr("src",video_url);
+    	
+    	$("#${assistantName}-doc").html("");
+    	assistant.showLoading("${assistantName}-doc");
+    	assistant.requestData({
+			isLocationPath:true,
+			requestContent : "crossDomainAccess",
+			extraInfo:{
+				method:"GET",
+				url:doc_url
+			}
+		}, function(data) {
+			var jsonData=$.parseJSON(data);
+			if(jsonData&&jsonData.content){
+				var doc=$(jsonData.content).find("article.markdown-body");
+				$("#${assistantName}-doc").html(doc);
+			}
+		});
+    });
+    </script>
+
+</div>

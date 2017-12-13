@@ -12,8 +12,7 @@ import javax.servlet.ServletContextListener;
 
 import org.apache.log4j.Logger;
 
-import com.weihua.message.MessageDispenser;
-import com.weihua.util.ConfigUtil;
+import com.weihua.message.MessageService;
 
 public class SyncService implements ServletContextListener {
 	private static final Logger LOGGER = Logger.getLogger(SyncService.class);
@@ -26,10 +25,10 @@ public class SyncService implements ServletContextListener {
 	}
 
 	private static void initUtilConfig() {
-		ResourceBundle emailBundle = ResourceBundle.getBundle("assets/config", Locale.getDefault());
+		ResourceBundle bundle = ResourceBundle.getBundle("assets/config", Locale.getDefault());
 		Map<String, String> map = new HashMap<String, String>();
-		for (String key : emailBundle.keySet()) {
-			map.put(key, emailBundle.getString(key));
+		for (String key : bundle.keySet()) {
+			map.put(key, bundle.getString(key));
 		}
 		ConfigUtil.init(map);
 	}
@@ -52,7 +51,7 @@ public class SyncService implements ServletContextListener {
 			@Override
 			public void run() {
 				try {
-					MessageDispenser.notifyConsumers();
+					MessageService.notifyConsumers();
 				} catch (Exception e) {
 					LOGGER.error("SyncService run error:", e);
 				}
