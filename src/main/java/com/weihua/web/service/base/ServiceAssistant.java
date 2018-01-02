@@ -35,9 +35,12 @@ public abstract class ServiceAssistant implements Assistant {
 				if (lastHistoryRecord != null) {
 					remindTime = DateUtil.getDateFormat(lastHistoryRecord.getCreateTime(), "yyyy-MM-dd HH:mm");
 				}
-				LOGGER.info("ServiceAssistant currentTime:" + currentTime + "remindTime:" + remindTime);
 
-				return lastHistoryRecord == null || !currentTime.equals(remindTime);
+				boolean result = lastHistoryRecord == null || !currentTime.equals(remindTime);
+				if (result) {
+					LOGGER.info("ServiceAssistant currentTime:" + currentTime + "remindTime:" + remindTime);
+				}
+				return result;
 			}
 		} else if (ServiceTriggerPeriod.SECOND == serviceRemindTimeConfig.getServiceTriggerPeriod()) {
 			HistoryRecord lastHistoryRecord = Context.findLastBackAssistantHistory(request.getAssistantType(),
