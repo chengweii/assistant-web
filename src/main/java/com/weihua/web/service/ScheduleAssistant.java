@@ -17,6 +17,7 @@ import com.weihua.common.util.DidaListUtil;
 import com.weihua.common.util.DidaListUtil.Task;
 import com.weihua.common.util.DidaListUtil.TaskStatus;
 import com.weihua.common.util.DidaListUtil.TaskType;
+import com.weihua.common.util.DidaListUtil.Task.Item;
 import com.weihua.common.util.EmailUtil;
 import com.weihua.common.util.EmailUtil.SendInfo;
 import com.weihua.common.util.GsonUtil;
@@ -111,8 +112,7 @@ public class ScheduleAssistant extends BaseAssistant {
 			bindScheduleModel(model);
 
 			SendInfo info = new SendInfo();
-			info.setReceiveUser(
-					ConfigUtil.get(AssistantConstant.FAMILY_ASSISTANT_EMAIL_SCHEDULE_REMINDEMAILUSER));
+			info.setReceiveUser(ConfigUtil.get(AssistantConstant.FAMILY_ASSISTANT_EMAIL_SCHEDULE_REMINDEMAILUSER));
 			info.setHeadName(AssistantConstant.FAMILY_ASSISTANT_STRING_12);
 			Response response = response(model, "schedule/schedule");
 			info.setSendHtml(response.getContent());
@@ -143,17 +143,39 @@ public class ScheduleAssistant extends BaseAssistant {
 
 		boolean isHoliday = holidayArrangementDao
 				.findIsHoliday(DateUtil.getDateFormat(new Date(), DateFormatType.YYYY_MM_DD));
-		List<Map<String, Object>> triflesList = familyDao.findRecordListByTime("00:00", "23:59",
-				isHoliday ? AssistantConstant.FAMILY_ASSISTANT_STRING_6 : AssistantConstant.FAMILY_ASSISTANT_STRING_7);
-		if (!CollectionUtil.isEmpty(triflesList)) {
-			for (Map<String, Object> item : triflesList) {
+		List<Task> triflesTaskList = DidaListUtil.getTaskListFromDida365(TaskType.MY_DAILY, TaskStatus.UNFINISH);
+		if (!CollectionUtil.isEmpty(triflesTaskList)) {
+			String prefix = isHoliday ? AssistantConstant.FAMILY_ASSISTANT_STRING_6
+					: AssistantConstant.FAMILY_ASSISTANT_STRING_7;
+			List<Item> items = null;
+			for (Task task : triflesTaskList) {
+				if (task.title.contains(prefix)) {
+					items = task.items;
+				}
+			}
+
+			for (Item item : items) {
 				Map<String, Object> map = new HashMap<String, Object>();
-				map.put("schedule_time", item.get("record_time"));
-				map.put("schedule_title", item.get("record_title"));
-				map.put("schedule_content", item.get("record_content"));
+				String[] schedule = item.title.split("##");
+				map.put("schedule_time", schedule[0]);
+				map.put("schedule_title", schedule[1]);
+				map.put("schedule_content", schedule[2]);
 				scheduleList.add(map);
 			}
 		}
+
+		/*
+		 * List<Map<String, Object>> triflesList =
+		 * familyDao.findRecordListByTime("00:00", "23:59", isHoliday ?
+		 * AssistantConstant.FAMILY_ASSISTANT_STRING_6 :
+		 * AssistantConstant.FAMILY_ASSISTANT_STRING_7); if
+		 * (!CollectionUtil.isEmpty(triflesList)) { for (Map<String, Object>
+		 * item : triflesList) { Map<String, Object> map = new HashMap<String,
+		 * Object>(); map.put("schedule_time", item.get("record_time"));
+		 * map.put("schedule_title", item.get("record_title"));
+		 * map.put("schedule_content", item.get("record_content"));
+		 * scheduleList.add(map); } }
+		 */
 
 		Date tempDate;
 		TimePeriod timePeriod;
