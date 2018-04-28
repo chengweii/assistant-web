@@ -54,10 +54,10 @@
         <!--end title-->
         <% for(item in scheduleList){ %>
         <tr>
-          <td  height="50" width="55" align="left" style="font-family:Open sans, Arial, Sans-serif; font-size:16px; color:#808E8E;line-height:16px;">
+          <td  height="50" width="70" align="left" style="font-family:Open sans, Arial, Sans-serif; font-size:16px; color:#808E8E;line-height:16px;">
             <a style="background-color:${item.time_period_color};padding:5px;font-size: 13px;font-weight:bold;color:#ffffff;border-radius: 5px;margin-left:5px;margin-right:5px;">${item.schedule_time}</a></td>
-		  <td  height="50" align="left" style="font-family:Open sans, Arial, Sans-serif; font-size:16px; color:#808E8E;line-height:16px;">
-            <p style="font-size:15px;margin-top:5px;margin-bottom:5px;">${item.schedule_title}</p>
+		  <td  height="50" align="left" style="font-family:Open sans, Arial, Sans-serif; font-size:16px; color:#808E8E;line-height:16px;padding-right:10px;">
+            <p style="font-size:13px;font-weight:bold;margin-top:5px;margin-bottom:5px;">${item.schedule_title}</p>
 			<p style="font-size:12px;margin-top:0px;margin-bottom:5px;">${item.schedule_content}</p>
           </td>
         </tr>
